@@ -16,6 +16,8 @@ library(tidyverse)
 
 ## Demographic Data
 
+### 2010s
+
 I’ll start by getting demographic data into the environment. I want it
 in a tidy format, but the census bureau data is pretty unwieldy, so
 it’ll need to be wrangled before being useful.
@@ -1276,6 +1278,8 @@ f_cb2010_2019 %>%
 Coolio bo-boolio. Now the bigger test of checking that the other decades
 on the census bureau’s site don’t have any data formatting issues.
 
+### 2000s
+
 ``` r
 f_cb2000_2009 <- read_csv("https://www2.census.gov/programs-surveys/popest/datasets/2000-2009/state/asrh/sc-est2009-alldata5-all.csv")
 
@@ -1304,6 +1308,8 @@ f_cb2000_2009
 Okay so that looks like that is formatted consistently, now I need to
 double check the 90’s and the 80’s (that’s all the census data that
 exists online):
+
+### 1990S
 
 ``` r
 fwf_empty(file = "C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/raw/comp8090.txt")
@@ -2863,6 +2869,8 @@ available.
 the dataset. It’s in a different dataset, but actually is going to be
 *way* easier to work with.
 
+\#\#\#1980S
+
 ``` r
 f_cb1980_1989 <- read_fwf("https://www2.census.gov/programs-surveys/popest/datasets/1980-1990/state/asrh/st_int_asrh.txt",
                      fwf_empty("https://www2.census.gov/programs-surveys/popest/datasets/1980-1990/state/asrh/st_int_asrh.txt",
@@ -3359,3 +3367,146 @@ Awesome. Now I have the 80s, 90s, 2000s, and 2010s, though I’m missing
 1980 itself (I won’t worry about the name being off here, I’ll just fix
 it in the wrangling script when I copy that over). To round out the 80s,
 I just need to pull 1980 itself.
+
+Shoot - I just realized that the 2000s is formatted *ever so slightly*
+differently than the 2010s, so I need to go back & actually do the 2000s
+shindig. I should be able to reuse most of the code; a lot of the stuff
+is formatted similarly.
+
+``` r
+f_cb2000_2009
+```
+
+    ## # A tibble: 197,370 x 20
+    ##    SUMLEV REGION DIVISION STATE   SEX ORIGIN  RACE   AGE CENSUS2000POP
+    ##    <chr>   <dbl>    <dbl> <chr> <dbl>  <dbl> <dbl> <dbl>         <dbl>
+    ##  1 040         3        6 01        0      0     1     0         39967
+    ##  2 040         3        6 01        0      0     1     1         39983
+    ##  3 040         3        6 01        0      0     1     2         39491
+    ##  4 040         3        6 01        0      0     1     3         39699
+    ##  5 040         3        6 01        0      0     1     4         40004
+    ##  6 040         3        6 01        0      0     1     5         40238
+    ##  7 040         3        6 01        0      0     1     6         40722
+    ##  8 040         3        6 01        0      0     1     7         41456
+    ##  9 040         3        6 01        0      0     1     8         41909
+    ## 10 040         3        6 01        0      0     1     9         43116
+    ## # ... with 197,360 more rows, and 11 more variables: ESTIMATESBASE2000 <dbl>,
+    ## #   POPESTIMATE2000 <dbl>, POPESTIMATE2001 <dbl>, POPESTIMATE2002 <dbl>,
+    ## #   POPESTIMATE2003 <dbl>, POPESTIMATE2004 <dbl>, POPESTIMATE2005 <dbl>,
+    ## #   POPESTIMATE2006 <dbl>, POPESTIMATE2007 <dbl>, POPESTIMATE2008 <dbl>,
+    ## #   POPESTIMATE2009 <dbl>
+
+``` r
+f_cb2000_2009 %>%
+  select(-SUMLEV, -REGION, -DIVISION, -CENSUS2000POP, -ESTIMATESBASE2000)  %>%
+  left_join(f_states2, by = c("STATE" = "FIPS")) %>%
+  select(-STATE, -`Postal Code`) %>%
+  relocate(Name) %>%
+  pivot_longer(cols = starts_with("POPESTIMATE"),
+               names_to = "year",
+               names_prefix = "POPESTIMATE",
+               values_to = "pop") %>%
+  rename(state = Name,
+         sex = SEX,
+         origin = ORIGIN,
+         race = RACE,
+         age = AGE) %>%
+  filter(sex != 0,
+         origin != 0) %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  group_by(state, year) %>%
+  mutate(tot_male = sum(male),
+         tot_female = sum(female)) %>%
+  ungroup(state, year) %>%
+  mutate(tot_pop = tot_male + tot_female,
+         pct_male = tot_male/tot_pop) %>%
+  select(-tot_male, -tot_female, -tot_pop) %>%
+  mutate(tot_row = male + female) %>%
+  select(-male, -female) %>%
+  relocate(tot_row, .after = year) %>%
+  arrange(year) %>%
+  mutate(race = if_else(origin == 1, race, 6)) %>%
+  select(-origin) %>%
+  group_by(state, race, age, year) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  distinct(tot_row, .keep_all = TRUE) %>%
+  ungroup(state, race, age, year) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         asian = "4",
+         pac_island = "5",
+         hispanic = "6") %>%
+  mutate(tot_row = white + black + nat_american + asian + pac_island + hispanic) %>%
+  group_by(state, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row), 
+         pct_nat_american = sum(nat_american)/sum(tot_row),
+         pct_asian = sum(asian)/sum(tot_row),
+         pct_pac_island = sum(pac_island)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  select(-white, -black, -nat_american, -asian, -pac_island, -hispanic) %>%
+  mutate(pct_aapi = pct_asian + pct_pac_island) %>%
+  select(-pct_asian, -pct_pac_island) %>%
+  mutate(age_score = age * tot_row) %>%
+  group_by(state, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  mutate(age_score = if_else(age < 18, 0, age * tot_row),
+         age_total = if_else(age < 18, 0, tot_row)) %>%
+  group_by(state, year) %>%
+  mutate(avg_age_adult = sum(age_score)/sum(age_total)) %>%
+  ungroup(state, year) %>%
+  select(-age_score, -age_total) %>%
+  mutate(age_00_17 = if_else(age < 18, tot_row, 0),
+         age_18_34 = if_else(age >= 18 & age < 35, tot_row, 0),
+         age_35_64 = if_else(age >= 35 & age < 65, tot_row, 0),
+         age_65_00 = if_else(age >= 65, tot_row, 0)) %>%
+  group_by(state, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  group_by(state) %>%
+  distinct(year, .keep_all = TRUE) %>%
+  ungroup() %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age, -tot_row) %>%
+  relocate(pop, .after = year)
+```
+
+    ## # A tibble: 510 x 15
+    ##    state year     pop pct_male pct_white pct_black pct_nat_american pct_hispanic
+    ##    <chr> <chr>  <dbl>    <dbl>     <dbl>     <dbl>            <dbl>        <dbl>
+    ##  1 Alab~ 2000  4.49e6    0.483     0.704    0.260           0.00953       0.0174
+    ##  2 Alas~ 2000  6.60e5    0.516     0.684    0.0394          0.177         0.0423
+    ##  3 Ariz~ 2000  5.24e6    0.499     0.640    0.0328          0.0500        0.253 
+    ##  4 Arka~ 2000  2.71e6    0.488     0.787    0.157           0.0130        0.0329
+    ##  5 Cali~ 2000  3.48e7    0.498     0.476    0.0685          0.0111        0.322 
+    ##  6 Colo~ 2000  4.41e6    0.503     0.746    0.0411          0.0125        0.172 
+    ##  7 Conn~ 2000  3.45e6    0.484     0.777    0.0930          0.00582       0.0955
+    ##  8 Dela~ 2000  7.96e5    0.486     0.726    0.195           0.00660       0.0484
+    ##  9 Dist~ 2000  5.80e5    0.471     0.284    0.597           0.00679       0.0799
+    ## 10 Flor~ 2000  1.62e7    0.488     0.656    0.147           0.00604       0.169 
+    ## # ... with 500 more rows, and 7 more variables: pct_aapi <dbl>, avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+That’s a pretty quick fix but I’m pretty sure that this is all
+corrected. Now, to get back on track & add 1980.
+
+[Here’s](https://www.census.gov/data/datasets/time-series/demo/popest/1980s-county.html)
+where I found the 1980 data. It’s a county dataset for the 1980s, but
+just contains white/black/other. It’s saved as a .xls, so I extracted
+the first page and saved it as a .csv to the `/data/raw` directory. I’ll
+keep digging around. to hopefully find something better.
+
+[NHGIS](https://www.nhgis.org/) has a dataset builder that’s pretty
+useful, hopefully should be able to get 1980 from this.
