@@ -268,10 +268,16 @@ f_fips <- read_csv("data/raw/county_FIPS.csv")
 f_fips <- f_fips %>%
   mutate(FIPS = if_else(FIPS < 10000, 
                         paste("0", as.character(FIPS), sep = ""),
-                        as.character(FIPS)))
+                        as.character(FIPS)),
+         Name = if_else(FIPS == 11001,
+                        "District of Columbia",
+                        Name))
 
 # adding state frame to get state name
-f_states <- read_csv("data/raw/states.csv")
+f_states <- 
+  read_csv("data/raw/states.csv") %>%
+  add_row(`US STATE` = "District of Columbia",
+          ABBREVIATION = "DC")
 
 # wrangle 
 f_cb1990_1999 <- 
