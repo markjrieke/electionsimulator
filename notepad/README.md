@@ -88,16 +88,22 @@ f_cb2010_2019 %>%
     ## # ... with 38,690 more rows
 
 Now the fun gets to start - I want the following demographic variables
-as their own columns: \* **pct\_male : ** percentage of population that
-is male. \* **pct\_hispanic : ** percentage of population that is
-hispanic. While the census data is there, I don’t plan on breaking this
-down by hispanic race. \* **pct\_white : ** percentage of population
-that is non-hispanic white. \* **pct\_black : ** percentage of
-population that is non-hispanic black. \* **pct\_nat\_american : **
-percentage of population that is non-hispanic native american. \*
-**pct\_asian : ** percentage of population that is non-hispanic asian.
-\* **pct\_pac\_island : ** percentage of population that is non-hispanic
-pacific-islander.
+as their own columns:
+
+  - **pct\_male : ** percentage of population that is male.
+  - **pct\_hispanic : ** percentage of population that is hispanic.
+    While the census data is there, I don’t plan on breaking this down
+    by hispanic race.
+  - **pct\_white : ** percentage of population that is non-hispanic
+    white.
+  - **pct\_black : ** percentage of population that is non-hispanic
+    black.
+  - **pct\_nat\_american : ** percentage of population that is
+    non-hispanic native american.
+  - **pct\_asian : ** percentage of population that is non-hispanic
+    asian.
+  - **pct\_pac\_island : ** percentage of population that is
+    non-hispanic pacific-islander.
 
 Source for category codes can be found
 [here](https://www2.census.gov/programs-surveys/popest/technical-documentation/file-layouts/2010-2019/sc-est2019-alldata6.pdf)
@@ -773,8 +779,12 @@ f_cb2010_2019 %>%
 
 Coolio jones. Now I need to figure out a way to get the population
 percentage for age groups. I’m thinking of utilizing the following
-groups: \* Under 18 (up to and including 17) \* 18 - 34 \* 35 - 64 \* 65
-+
+groups:
+
+  - Under 18 (up to and including 17)
+  - 18 - 34
+  - 35 - 64
+  - 65 +
 
 I also want to get the mean age (and maybe mean age of 18+), which I
 think will be *slightly* easier, so let’s start with that.
@@ -1309,7 +1319,7 @@ Okay so that looks like that is formatted consistently, now I need to
 double check the 90’s and the 80’s (that’s all the census data that
 exists online):
 
-### 1990S
+### 1990s
 
 ``` r
 fwf_empty(file = "C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/raw/comp8090.txt")
@@ -2196,14 +2206,27 @@ f_cb1990 %>%
     ## # ... with 959 more rows, and 2 more variables: pct_hispanic <dbl>,
     ## #   pct_aapi <dbl>
 
-The 90s datasets break up age into age group codes: \* **0 :** \< 1
-year; \* **1 :** 1 - 4 years; \* **2 :** 5 - 9 years; \* **3 :** 10 - 14
-years; \* **4 :** 15 - 19 years; \* **5 :** 20 - 24 years; \* **6 :** 25
-- 29 years; \* **7 :** 30 - 34 years; \* **8 :** 35 - 39 years; \* **9
-:** 40 - 44 years; \* **10 :** 45 - 49 years; \* **11 :** 50 - 54 years;
-\* **12 :** 55 - 59 years; \* **13 :** 60 - 64 years; \* **14 :** 65 -
-69 years; \* **15 :** 70 - 74 years; \* **16 :** 75 - 79 years; \* **17
-:** 80 - 84 years; \* **18 :** 85 years and older.
+The 90s datasets break up age into age group codes:
+
+  - **0 :** \< 1 year
+  - **1 :** 1 - 4 years
+  - **2 :** 5 - 9 years
+  - **3 :** 10 - 14 years
+  - **4 :** 15 - 19 years
+  - **5 :** 20 - 24 years
+  - **6 :** 25 - 29 years
+  - **7 :** 30 - 34 years
+  - **8 :** 35 - 39 years
+  - **9 :** 40 - 44 years
+  - **10 :** 45 - 49 years
+  - **11 :** 50 - 54 years
+  - **12 :** 55 - 59 years
+  - **13 :** 60 - 64 years
+  - **14 :** 65 - 69 years
+  - **15 :** 70 - 74 years
+  - **16 :** 75 - 79 years
+  - **17 :** 80 - 84 years
+  - **18 :** 85 years and older.
 
 For calculating the mean age, I’ll assume that the ages are evenly
 distributed throughout the age range, and just use the mean of each
@@ -2869,7 +2892,7 @@ available.
 the dataset. It’s in a different dataset, but actually is going to be
 *way* easier to work with.
 
-\#\#\#1980S
+### 1980s
 
 ``` r
 f_cb1980_1989 <- read_fwf("https://www2.census.gov/programs-surveys/popest/datasets/1980-1990/state/asrh/st_int_asrh.txt",
@@ -3510,3 +3533,1580 @@ keep digging around. to hopefully find something better.
 
 [NHGIS](https://www.nhgis.org/) has a dataset builder that’s pretty
 useful, hopefully should be able to get 1980 from this.
+
+### 1980
+
+``` r
+f_cb1980 <- read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/raw/nhgis0003.csv")
+
+f_cb1980
+```
+
+    ## # A tibble: 922 x 38
+    ##    GISJOIN  YEAR STATE   STATEFP STATENH NAME     A08AA  A08AB B57AA B57AB B57AC
+    ##    <chr>   <dbl> <chr>   <chr>   <chr>   <chr>    <dbl>  <dbl> <dbl> <dbl> <dbl>
+    ##  1 G010     1820 Alabama 01      010     Alabama  67937  59964    NA    NA    NA
+    ##  2 G055     1820 Arkans~ NA      055     Arkans~   7835   6420    NA    NA    NA
+    ##  3 G090     1820 Connec~ 09      090     Connec~ 134581 140541    NA    NA    NA
+    ##  4 G100     1820 Delawa~ 10      100     Delawa~  36939  35810    NA    NA    NA
+    ##  5 G110     1820 Distri~ 11      110     Distri~  15909  17130    NA    NA    NA
+    ##  6 G130     1820 Georgia 13      130     Georgia 175171 165814    NA    NA    NA
+    ##  7 G170     1820 Illino~ 17      170     Illino~  30186  24976    NA    NA    NA
+    ##  8 G180     1820 Indiana 18      180     Indiana  77401  69777    NA    NA    NA
+    ##  9 G210     1820 Kentuc~ 21      210     Kentuc~ 289103 275032    NA    NA    NA
+    ## 10 G220     1820 Louisi~ 22      220     Louisi~  82407  70516    NA    NA    NA
+    ## # ... with 912 more rows, and 27 more variables: B57AD <dbl>, B57AE <dbl>,
+    ## #   B57AF <dbl>, B57AG <dbl>, B57AH <dbl>, B57AI <dbl>, B57AJ <dbl>,
+    ## #   B57AK <dbl>, B57AL <dbl>, B57AM <dbl>, B57AN <dbl>, B57AO <dbl>,
+    ## #   B57AP <dbl>, B57AQ <dbl>, B57AR <dbl>, AE7AA <dbl>, AE7AB <dbl>,
+    ## #   AE7AC <dbl>, AE7AD <dbl>, AE7AE <dbl>, AE7AF <dbl>, AE7AG <dbl>,
+    ## #   AE7AH <dbl>, AE7AI <dbl>, AE7AJ <dbl>, AE7AK <dbl>, AE7AL <dbl>
+
+This document has a pretty unique file format, with data going all the
+way back to 1820. let’s start with some basic wrangling & getting
+columns in the right format.
+
+``` r
+f_cb1980 %>%
+  select(-GISJOIN, -STATEFP, -STATENH, -NAME) %>%
+  rename(year = YEAR,
+         state = STATE,
+         male = A08AA,
+         female = A08AB,
+         age_00_04 = B57AA,
+         age_05_09 = B57AB,
+         age_10_14 = B57AC,
+         age_15_17 = B57AD,
+         age_18_19 = B57AE,
+         age_20 = B57AF,
+         age_21 = B57AG,
+         age_22_24 = B57AH,
+         age_25_29 = B57AI,
+         age_30_34 = B57AJ,
+         age_35_44 = B57AK,
+         age_45_54 = B57AL,
+         age_55_59 = B57AM,
+         age_60_61 = B57AN,
+         age_62_64 = B57AO,
+         age_65_74 = B57AP,
+         age_75_84 = B57AQ,
+         age_85_00 = B57AR,
+         white = AE7AA,
+         black = AE7AB,
+         nat_american = AE7AC,
+         aapi = AE7AD,
+         other = AE7AE,
+         mixed = AE7AF,
+         white_hispanic = AE7AG,
+         black_hispanic = AE7AH,
+         nat_american_hispanic = AE7AI,
+         aapi_hispanic = AE7AJ,
+         other_hispanic = AE7AK,
+         mixed_hispanic = AE7AL) %>%
+  mutate(year = as.character(year)) %>%
+  filter(year == "1980")
+```
+
+    ## # A tibble: 51 x 34
+    ##    year  state     male female age_00_04 age_05_09 age_10_14 age_15_17 age_18_19
+    ##    <chr> <chr>    <dbl>  <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>
+    ##  1 1980  Alabama 1.87e6 2.02e6    296412    314150    328096    223590    153816
+    ##  2 1980  Alaska  2.13e5 1.89e5     38949     35043     34282     22471     14683
+    ##  3 1980  Arizona 1.34e6 1.38e6    213883    211067    219573    146964    105053
+    ##  4 1980  Arkans~ 1.10e6 1.18e6    175592    180365    185491    129926     84396
+    ##  5 1980  Califo~ 1.17e7 1.20e7   1708400   1650348   1796019   1234191    896274
+    ##  6 1980  Colora~ 1.43e6 1.46e6    216495    213135    226147    153036    115552
+    ##  7 1980  Connec~ 1.50e6 1.61e6    185188    205758    256283    175690    112693
+    ##  8 1980  Delawa~ 2.87e5 3.08e5     41151     42076     48870     34498     25250
+    ##  9 1980  Distri~ 2.95e5 3.43e5     34365     36618     42133     30375     27249
+    ## 10 1980  Florida 4.68e6 5.07e6    570224    621534    685016    482862    328478
+    ## # ... with 41 more rows, and 25 more variables: age_20 <dbl>, age_21 <dbl>,
+    ## #   age_22_24 <dbl>, age_25_29 <dbl>, age_30_34 <dbl>, age_35_44 <dbl>,
+    ## #   age_45_54 <dbl>, age_55_59 <dbl>, age_60_61 <dbl>, age_62_64 <dbl>,
+    ## #   age_65_74 <dbl>, age_75_84 <dbl>, age_85_00 <dbl>, white <dbl>,
+    ## #   black <dbl>, nat_american <dbl>, aapi <dbl>, other <dbl>, mixed <dbl>,
+    ## #   white_hispanic <dbl>, black_hispanic <dbl>, nat_american_hispanic <dbl>,
+    ## #   aapi_hispanic <dbl>, other_hispanic <dbl>, mixed_hispanic <dbl>
+
+This format actually makes a lot of the coding pretty easy - don’t need
+to wrangle to get into this format. Let’s start off with `pct_male` and
+`pop`.
+
+``` r
+f_cb1980 %>%
+  select(-GISJOIN, -STATEFP, -STATENH, -NAME) %>%
+  rename(year = YEAR,
+         state = STATE,
+         male = A08AA,
+         female = A08AB,
+         age_00_04 = B57AA,
+         age_05_09 = B57AB,
+         age_10_14 = B57AC,
+         age_15_17 = B57AD,
+         age_18_19 = B57AE,
+         age_20 = B57AF,
+         age_21 = B57AG,
+         age_22_24 = B57AH,
+         age_25_29 = B57AI,
+         age_30_34 = B57AJ,
+         age_35_44 = B57AK,
+         age_45_54 = B57AL,
+         age_55_59 = B57AM,
+         age_60_61 = B57AN,
+         age_62_64 = B57AO,
+         age_65_74 = B57AP,
+         age_75_84 = B57AQ,
+         age_85_00 = B57AR,
+         white = AE7AA,
+         black = AE7AB,
+         nat_american = AE7AC,
+         aapi = AE7AD,
+         other = AE7AE,
+         mixed = AE7AF,
+         white_hispanic = AE7AG,
+         black_hispanic = AE7AH,
+         nat_american_hispanic = AE7AI,
+         aapi_hispanic = AE7AJ,
+         other_hispanic = AE7AK,
+         mixed_hispanic = AE7AL) %>%
+  mutate(year = as.character(year)) %>%
+  filter(year == "1980") %>%
+  mutate(pop = male + female,
+         pct_male = male/pop)
+```
+
+    ## # A tibble: 51 x 36
+    ##    year  state     male female age_00_04 age_05_09 age_10_14 age_15_17 age_18_19
+    ##    <chr> <chr>    <dbl>  <dbl>     <dbl>     <dbl>     <dbl>     <dbl>     <dbl>
+    ##  1 1980  Alabama 1.87e6 2.02e6    296412    314150    328096    223590    153816
+    ##  2 1980  Alaska  2.13e5 1.89e5     38949     35043     34282     22471     14683
+    ##  3 1980  Arizona 1.34e6 1.38e6    213883    211067    219573    146964    105053
+    ##  4 1980  Arkans~ 1.10e6 1.18e6    175592    180365    185491    129926     84396
+    ##  5 1980  Califo~ 1.17e7 1.20e7   1708400   1650348   1796019   1234191    896274
+    ##  6 1980  Colora~ 1.43e6 1.46e6    216495    213135    226147    153036    115552
+    ##  7 1980  Connec~ 1.50e6 1.61e6    185188    205758    256283    175690    112693
+    ##  8 1980  Delawa~ 2.87e5 3.08e5     41151     42076     48870     34498     25250
+    ##  9 1980  Distri~ 2.95e5 3.43e5     34365     36618     42133     30375     27249
+    ## 10 1980  Florida 4.68e6 5.07e6    570224    621534    685016    482862    328478
+    ## # ... with 41 more rows, and 27 more variables: age_20 <dbl>, age_21 <dbl>,
+    ## #   age_22_24 <dbl>, age_25_29 <dbl>, age_30_34 <dbl>, age_35_44 <dbl>,
+    ## #   age_45_54 <dbl>, age_55_59 <dbl>, age_60_61 <dbl>, age_62_64 <dbl>,
+    ## #   age_65_74 <dbl>, age_75_84 <dbl>, age_85_00 <dbl>, white <dbl>,
+    ## #   black <dbl>, nat_american <dbl>, aapi <dbl>, other <dbl>, mixed <dbl>,
+    ## #   white_hispanic <dbl>, black_hispanic <dbl>, nat_american_hispanic <dbl>,
+    ## #   aapi_hispanic <dbl>, other_hispanic <dbl>, mixed_hispanic <dbl>, pop <dbl>,
+    ## #   pct_male <dbl>
+
+Next, the races. While I don’t necessarily think this is the best
+option, because there is a `mixed` category for race that only exists in
+this frame, I’m going to merge the races into `pct_white`, `pct_black`,
+`pct_hispanic`, and `pct_other`. Again, that’s not the best way to do
+this, as it doesn’t capture the independence of native american or asian
+american populations, but since the data is formatted this way this is
+the only way I can think of rectifying this dataset with the other
+dataframes.
+
+``` r
+f_cb1980 %>%
+  select(-GISJOIN, -STATEFP, -STATENH, -NAME) %>%
+  rename(year = YEAR,
+         state = STATE,
+         male = A08AA,
+         female = A08AB,
+         age_00_04 = B57AA,
+         age_05_09 = B57AB,
+         age_10_14 = B57AC,
+         age_15_17 = B57AD,
+         age_18_19 = B57AE,
+         age_20 = B57AF,
+         age_21 = B57AG,
+         age_22_24 = B57AH,
+         age_25_29 = B57AI,
+         age_30_34 = B57AJ,
+         age_35_44 = B57AK,
+         age_45_54 = B57AL,
+         age_55_59 = B57AM,
+         age_60_61 = B57AN,
+         age_62_64 = B57AO,
+         age_65_74 = B57AP,
+         age_75_84 = B57AQ,
+         age_85_00 = B57AR,
+         white = AE7AA,
+         black = AE7AB,
+         nat_american = AE7AC,
+         aapi = AE7AD,
+         other = AE7AE,
+         mixed = AE7AF,
+         white_hispanic = AE7AG,
+         black_hispanic = AE7AH,
+         nat_american_hispanic = AE7AI,
+         aapi_hispanic = AE7AJ,
+         other_hispanic = AE7AK,
+         mixed_hispanic = AE7AL) %>%
+  mutate(year = as.character(year)) %>%
+  filter(year == "1980") %>%
+  mutate(pop = male + female,
+         pct_male = male/pop) %>%
+  select(-male, -female) %>%
+  mutate(pct_white = white/pop,
+         pct_black = black/pop,
+         pct_hispanic = (white_hispanic + black_hispanic + nat_american_hispanic +
+                         aapi_hispanic + other_hispanic + mixed_hispanic)/pop,
+         pct_other = (nat_american + aapi + other + mixed)/pop)
+```
+
+    ## # A tibble: 51 x 38
+    ##    year  state   age_00_04 age_05_09 age_10_14 age_15_17 age_18_19 age_20 age_21
+    ##    <chr> <chr>       <dbl>     <dbl>     <dbl>     <dbl>     <dbl>  <dbl>  <dbl>
+    ##  1 1980  Alabama    296412    314150    328096    223590    153816  76093  73269
+    ##  2 1980  Alaska      38949     35043     34282     22471     14683   8404   8728
+    ##  3 1980  Arizona    213883    211067    219573    146964    105053  54602  53076
+    ##  4 1980  Arkans~    175592    180365    185491    129926     84396  40940  39250
+    ##  5 1980  Califo~   1708400   1650348   1796019   1234191    896274 468066 464384
+    ##  6 1980  Colora~    216495    213135    226147    153036    115552  60376  59490
+    ##  7 1980  Connec~    185188    205758    256283    175690    112693  55230  55542
+    ##  8 1980  Delawa~     41151     42076     48870     34498     25250  12452  12274
+    ##  9 1980  Distri~     34365     36618     42133     30375     27249  13938  13997
+    ## 10 1980  Florida    570224    621534    685016    482862    328478 165674 161056
+    ## # ... with 41 more rows, and 29 more variables: age_22_24 <dbl>,
+    ## #   age_25_29 <dbl>, age_30_34 <dbl>, age_35_44 <dbl>, age_45_54 <dbl>,
+    ## #   age_55_59 <dbl>, age_60_61 <dbl>, age_62_64 <dbl>, age_65_74 <dbl>,
+    ## #   age_75_84 <dbl>, age_85_00 <dbl>, white <dbl>, black <dbl>,
+    ## #   nat_american <dbl>, aapi <dbl>, other <dbl>, mixed <dbl>,
+    ## #   white_hispanic <dbl>, black_hispanic <dbl>, nat_american_hispanic <dbl>,
+    ## #   aapi_hispanic <dbl>, other_hispanic <dbl>, mixed_hispanic <dbl>, pop <dbl>,
+    ## #   pct_male <dbl>, pct_white <dbl>, pct_black <dbl>, pct_hispanic <dbl>,
+    ## #   pct_other <dbl>
+
+This gives me `NA`s, for `pct_hispanic` and `pct_other` because of the
+mixed columns. A quick look through the dataset shows that all states
+have `NA` for bothe `mixed` and `mixed_hispanic`, so I’m just going to
+remove those columns.
+
+``` r
+f_cb1980 %>%
+  select(-GISJOIN, -STATEFP, -STATENH, -NAME) %>%
+  rename(year = YEAR,
+         state = STATE,
+         male = A08AA,
+         female = A08AB,
+         age_00_04 = B57AA,
+         age_05_09 = B57AB,
+         age_10_14 = B57AC,
+         age_15_17 = B57AD,
+         age_18_19 = B57AE,
+         age_20 = B57AF,
+         age_21 = B57AG,
+         age_22_24 = B57AH,
+         age_25_29 = B57AI,
+         age_30_34 = B57AJ,
+         age_35_44 = B57AK,
+         age_45_54 = B57AL,
+         age_55_59 = B57AM,
+         age_60_61 = B57AN,
+         age_62_64 = B57AO,
+         age_65_74 = B57AP,
+         age_75_84 = B57AQ,
+         age_85_00 = B57AR,
+         white = AE7AA,
+         black = AE7AB,
+         nat_american = AE7AC,
+         aapi = AE7AD,
+         other = AE7AE,
+         mixed = AE7AF,
+         white_hispanic = AE7AG,
+         black_hispanic = AE7AH,
+         nat_american_hispanic = AE7AI,
+         aapi_hispanic = AE7AJ,
+         other_hispanic = AE7AK,
+         mixed_hispanic = AE7AL) %>%
+  mutate(year = as.character(year)) %>%
+  filter(year == "1980") %>%
+  mutate(pop = male + female,
+         pct_male = male/pop) %>%
+  select(-male, -female, -mixed, -mixed_hispanic) %>%
+  mutate(pct_white = white/pop,
+         pct_black = black/pop,
+         pct_hispanic = (white_hispanic + black_hispanic + nat_american_hispanic +
+                         aapi_hispanic + other_hispanic)/pop,
+         pct_other = (nat_american + aapi + other)/pop)
+```
+
+    ## # A tibble: 51 x 36
+    ##    year  state   age_00_04 age_05_09 age_10_14 age_15_17 age_18_19 age_20 age_21
+    ##    <chr> <chr>       <dbl>     <dbl>     <dbl>     <dbl>     <dbl>  <dbl>  <dbl>
+    ##  1 1980  Alabama    296412    314150    328096    223590    153816  76093  73269
+    ##  2 1980  Alaska      38949     35043     34282     22471     14683   8404   8728
+    ##  3 1980  Arizona    213883    211067    219573    146964    105053  54602  53076
+    ##  4 1980  Arkans~    175592    180365    185491    129926     84396  40940  39250
+    ##  5 1980  Califo~   1708400   1650348   1796019   1234191    896274 468066 464384
+    ##  6 1980  Colora~    216495    213135    226147    153036    115552  60376  59490
+    ##  7 1980  Connec~    185188    205758    256283    175690    112693  55230  55542
+    ##  8 1980  Delawa~     41151     42076     48870     34498     25250  12452  12274
+    ##  9 1980  Distri~     34365     36618     42133     30375     27249  13938  13997
+    ## 10 1980  Florida    570224    621534    685016    482862    328478 165674 161056
+    ## # ... with 41 more rows, and 27 more variables: age_22_24 <dbl>,
+    ## #   age_25_29 <dbl>, age_30_34 <dbl>, age_35_44 <dbl>, age_45_54 <dbl>,
+    ## #   age_55_59 <dbl>, age_60_61 <dbl>, age_62_64 <dbl>, age_65_74 <dbl>,
+    ## #   age_75_84 <dbl>, age_85_00 <dbl>, white <dbl>, black <dbl>,
+    ## #   nat_american <dbl>, aapi <dbl>, other <dbl>, white_hispanic <dbl>,
+    ## #   black_hispanic <dbl>, nat_american_hispanic <dbl>, aapi_hispanic <dbl>,
+    ## #   other_hispanic <dbl>, pop <dbl>, pct_male <dbl>, pct_white <dbl>,
+    ## #   pct_black <dbl>, pct_hispanic <dbl>, pct_other <dbl>
+
+Thinking out loud, this decision may require that I go back to all the
+other decades and get a different data source (the 6-race dataset,
+whereas I was previously using the 5-race dataset). Reason being, the
+5-race dataset *I believe* allows for races to be listed as “single or
+in combination,” whereas this has a separate category for two + races.
+It won’t change things greatly, but it may make working with the data a
+bit easier (planning on using NHGIS for all of it), and it’ll more
+accurately reflect what I want to show…
+
+Actually, I’m just going to redo everything right now. The NHGIS dataset
+will come in one frame, so I should be able to do the whole she-bang at
+once.
+
+Audible - the NHGIS doesn’t have formatted tables for the non-decennial
+years. So I’ll have to go back & modify each decade individually. It
+really shouldn’t be too hard, though, since I’m just going to be
+shifting to the 6-race category & moving non-white/black/hispanic into
+other.
+
+### Redoing the whole thang
+
+Let’s start with the 2010s.
+
+``` r
+f_cb2010_2019 <- read_csv("https://www2.census.gov/programs-surveys/popest/tables/2010-2019/state/asrh/sc-est2019-alldata6.csv")
+
+f_cb2010_2019
+```
+
+    ## # A tibble: 236,844 x 21
+    ##    SUMLEV REGION DIVISION STATE NAME      SEX ORIGIN  RACE   AGE CENSUS2010POP
+    ##    <chr>   <dbl>    <dbl> <chr> <chr>   <dbl>  <dbl> <dbl> <dbl>         <dbl>
+    ##  1 040         3        6 01    Alabama     0      0     1     0         37991
+    ##  2 040         3        6 01    Alabama     0      0     1     1         38150
+    ##  3 040         3        6 01    Alabama     0      0     1     2         39738
+    ##  4 040         3        6 01    Alabama     0      0     1     3         39827
+    ##  5 040         3        6 01    Alabama     0      0     1     4         39353
+    ##  6 040         3        6 01    Alabama     0      0     1     5         39520
+    ##  7 040         3        6 01    Alabama     0      0     1     6         39813
+    ##  8 040         3        6 01    Alabama     0      0     1     7         39695
+    ##  9 040         3        6 01    Alabama     0      0     1     8         40012
+    ## 10 040         3        6 01    Alabama     0      0     1     9         42073
+    ## # ... with 236,834 more rows, and 11 more variables: ESTIMATESBASE2010 <dbl>,
+    ## #   POPESTIMATE2010 <dbl>, POPESTIMATE2011 <dbl>, POPESTIMATE2012 <dbl>,
+    ## #   POPESTIMATE2013 <dbl>, POPESTIMATE2014 <dbl>, POPESTIMATE2015 <dbl>,
+    ## #   POPESTIMATE2016 <dbl>, POPESTIMATE2017 <dbl>, POPESTIMATE2018 <dbl>,
+    ## #   POPESTIMATE2019 <dbl>
+
+``` r
+f_cb2010_2019 %>% 
+  select(-SUMLEV, -REGION, -DIVISION, -STATE, -CENSUS2010POP, -ESTIMATESBASE2010) %>% 
+  pivot_longer(cols = starts_with("POPESTIMATE"),
+               names_to = "year",
+               names_prefix = "POPESTIMATE",
+               values_to = "pop") %>%
+  rename(state = NAME,
+         sex = SEX,
+         origin = ORIGIN,
+         race = RACE,
+         age = AGE) %>%
+  filter(sex != 0,
+         origin != 0) %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  group_by(state, year) %>%
+  mutate(tot_male = sum(male),
+         tot_female = sum(female)) %>%
+  ungroup(state, year) %>%
+  mutate(tot_pop = tot_male + tot_female,
+         pct_male = tot_male/tot_pop) %>%
+  select(-tot_male, -tot_female, -tot_pop) %>%
+  mutate(tot_row = male + female) %>%
+  select(-male, -female) %>%
+  relocate(tot_row, .after = year) %>%
+  arrange(year) %>%
+  mutate(race = if_else(origin == 1, race, 7)) %>%
+  select(-origin) %>%
+  group_by(state, race, age, year) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  distinct(tot_row, .keep_all = TRUE) %>%
+  ungroup(state, race, age, year) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         asian = "4",
+         pac_island = "5",
+         other = "6",
+         hispanic = "7") %>%
+  mutate(tot_row = white + black + nat_american + asian + pac_island + other + hispanic) %>%
+  group_by(state, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_american) + sum(asian) + sum(pac_island) + sum(other))/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  select(-white, -black, -nat_american, -asian, -pac_island, -hispanic, -other) %>%
+  mutate(age_score = age * tot_row) %>%
+  group_by(state, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  mutate(age_score = if_else(age < 18, 0, age * tot_row),
+         age_total = if_else(age < 18, 0, tot_row)) %>%
+  group_by(state, year) %>%
+  mutate(avg_age_adult = sum(age_score)/sum(age_total)) %>%
+  ungroup(state, year) %>%
+  select(-age_score, -age_total) %>%
+  mutate(age_00_17 = if_else(age < 18, tot_row, 0),
+         age_18_34 = if_else(age >= 18 & age < 35, tot_row, 0),
+         age_35_64 = if_else(age >= 35 & age < 65, tot_row, 0),
+         age_65_00 = if_else(age >= 65, tot_row, 0)) %>%
+  group_by(state, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  group_by(state) %>%
+  distinct(year, .keep_all = TRUE) %>%
+  ungroup() %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age, -tot_row) %>%
+  relocate(pop, .after = year)
+```
+
+    ## # A tibble: 510 x 14
+    ##    state        year     pop pct_male pct_white pct_black pct_hispanic pct_other
+    ##    <chr>        <chr>  <dbl>    <dbl>     <dbl>     <dbl>        <dbl>     <dbl>
+    ##  1 Alabama      2010  4.79e6    0.485     0.671    0.261        0.0389    0.0295
+    ##  2 Alaska       2010  7.14e5    0.521     0.641    0.0313       0.0560    0.271 
+    ##  3 Arizona      2010  6.41e6    0.497     0.579    0.0378       0.297     0.0865
+    ##  4 Arkansas     2010  2.92e6    0.491     0.745    0.154        0.0642    0.0367
+    ##  5 California   2010  3.73e7    0.497     0.402    0.0586       0.377     0.162 
+    ##  6 Colorado     2010  5.05e6    0.501     0.701    0.0379       0.207     0.0542
+    ##  7 Connecticut  2010  3.58e6    0.487     0.714    0.0952       0.135     0.0559
+    ##  8 Delaware     2010  9.00e5    0.484     0.654    0.209        0.0820    0.0551
+    ##  9 District of~ 2010  6.05e5    0.472     0.350    0.500        0.0923    0.0576
+    ## 10 Florida      2010  1.88e7    0.489     0.580    0.153        0.226     0.0416
+    ## # ... with 500 more rows, and 6 more variables: avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+Dobis - Next, The 2000s.
+
+``` r
+f_cb2000_2009 <- read_csv("https://www2.census.gov/programs-surveys/popest/datasets/2000-2009/state/asrh/sc-est2009-alldata6-all.csv")
+
+f_cb2000_2009
+```
+
+    ## # A tibble: 236,844 x 20
+    ##    SUMLEV REGION DIVISION STATE   SEX ORIGIN  RACE   AGE CENSUS2000POP
+    ##    <chr>   <dbl>    <dbl> <chr> <dbl>  <dbl> <dbl> <dbl>         <dbl>
+    ##  1 040         3        6 01        0      0     1     0         38932
+    ##  2 040         3        6 01        0      0     1     1         39041
+    ##  3 040         3        6 01        0      0     1     2         38619
+    ##  4 040         3        6 01        0      0     1     3         38870
+    ##  5 040         3        6 01        0      0     1     4         39178
+    ##  6 040         3        6 01        0      0     1     5         39491
+    ##  7 040         3        6 01        0      0     1     6         40034
+    ##  8 040         3        6 01        0      0     1     7         40733
+    ##  9 040         3        6 01        0      0     1     8         41215
+    ## 10 040         3        6 01        0      0     1     9         42473
+    ## # ... with 236,834 more rows, and 11 more variables: ESTIMATESBASE2000 <dbl>,
+    ## #   POPESTIMATE2000 <dbl>, POPESTIMATE2001 <dbl>, POPESTIMATE2002 <dbl>,
+    ## #   POPESTIMATE2003 <dbl>, POPESTIMATE2004 <dbl>, POPESTIMATE2005 <dbl>,
+    ## #   POPESTIMATE2006 <dbl>, POPESTIMATE2007 <dbl>, POPESTIMATE2008 <dbl>,
+    ## #   POPESTIMATE2009 <dbl>
+
+``` r
+f_cb2000_2009 %>%
+  select(-SUMLEV, -REGION, -DIVISION, -CENSUS2000POP, -ESTIMATESBASE2000)  %>%
+  left_join(f_states2, by = c("STATE" = "FIPS")) %>%
+  select(-STATE, -`Postal Code`) %>%
+  relocate(Name) %>%
+  pivot_longer(cols = starts_with("POPESTIMATE"),
+               names_to = "year",
+               names_prefix = "POPESTIMATE",
+               values_to = "pop") %>%
+  rename(state = Name,
+         sex = SEX,
+         origin = ORIGIN,
+         race = RACE,
+         age = AGE) %>%
+  filter(sex != 0,
+         origin != 0,
+         state != "United States") %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  group_by(state, year) %>%
+  mutate(tot_male = sum(male),
+         tot_female = sum(female)) %>%
+  ungroup(state, year) %>%
+  mutate(tot_pop = tot_male + tot_female,
+         pct_male = tot_male/tot_pop) %>%
+  select(-tot_male, -tot_female, -tot_pop) %>%
+  mutate(tot_row = male + female) %>%
+  select(-male, -female) %>%
+  relocate(tot_row, .after = year) %>%
+  arrange(year) %>%
+  mutate(race = if_else(origin == 1, race, 7)) %>%
+  select(-origin) %>%
+  group_by(state, race, age, year) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  distinct(tot_row, .keep_all = TRUE) %>%
+  ungroup(state, race, age, year) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         asian = "4",
+         pac_island = "5",
+         other = "6",
+         hispanic = "7") %>%
+  mutate(tot_row = white + black + nat_american + asian + pac_island + hispanic + other) %>%
+  group_by(state, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row), 
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_american) + sum(asian) + sum(pac_island) + sum(other))/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  select(-white, -black, -nat_american, -asian, -pac_island, -hispanic, -other) %>%
+  mutate(age_score = age * tot_row) %>%
+  group_by(state, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  mutate(age_score = if_else(age < 18, 0, age * tot_row),
+         age_total = if_else(age < 18, 0, tot_row)) %>%
+  group_by(state, year) %>%
+  mutate(avg_age_adult = sum(age_score)/sum(age_total)) %>%
+  ungroup(state, year) %>%
+  select(-age_score, -age_total) %>%
+  mutate(age_00_17 = if_else(age < 18, tot_row, 0),
+         age_18_34 = if_else(age >= 18 & age < 35, tot_row, 0),
+         age_35_64 = if_else(age >= 35 & age < 65, tot_row, 0),
+         age_65_00 = if_else(age >= 65, tot_row, 0)) %>%
+  group_by(state, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  group_by(state) %>%
+  distinct(year, .keep_all = TRUE) %>%
+  ungroup() %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age, -tot_row) %>%
+  relocate(pop, .after = year)
+```
+
+    ## # A tibble: 510 x 14
+    ##    state        year     pop pct_male pct_white pct_black pct_hispanic pct_other
+    ##    <chr>        <chr>  <dbl>    <dbl>     <dbl>     <dbl>        <dbl>     <dbl>
+    ##  1 Alabama      2000  4.45e6    0.483     0.703    0.259        0.0172    0.0202
+    ##  2 Alaska       2000  6.27e5    0.517     0.679    0.0340       0.0415    0.245 
+    ##  3 Arizona      2000  5.17e6    0.499     0.640    0.0296       0.254     0.0763
+    ##  4 Arkansas     2000  2.68e6    0.488     0.786    0.156        0.0327    0.0249
+    ##  5 California   2000  3.40e7    0.498     0.472    0.0651       0.325     0.137 
+    ##  6 Colorado     2000  4.33e6    0.504     0.746    0.0374       0.172     0.0439
+    ##  7 Connecticut  2000  3.41e6    0.484     0.779    0.0892       0.0948    0.0373
+    ##  8 Delaware     2000  7.86e5    0.486     0.726    0.191        0.0479    0.0351
+    ##  9 District of~ 2000  5.72e5    0.471     0.281    0.598        0.0791    0.0411
+    ## 10 Florida      2000  1.60e7    0.488     0.656    0.145        0.169     0.0293
+    ## # ... with 500 more rows, and 6 more variables: avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+Dope dope, on to the 90s (actually, this is unchanged with the exception
+that some of the races are going to get merged).
+
+``` r
+f_agegroups <- tibble(group = seq(0, 18, 1),
+                      mean_age = c(0, seq(2.5, 82.5, 5), 85))
+
+f_agegroups
+```
+
+    ## # A tibble: 19 x 2
+    ##    group mean_age
+    ##    <dbl>    <dbl>
+    ##  1     0      0  
+    ##  2     1      2.5
+    ##  3     2      7.5
+    ##  4     3     12.5
+    ##  5     4     17.5
+    ##  6     5     22.5
+    ##  7     6     27.5
+    ##  8     7     32.5
+    ##  9     8     37.5
+    ## 10     9     42.5
+    ## 11    10     47.5
+    ## 12    11     52.5
+    ## 13    12     57.5
+    ## 14    13     62.5
+    ## 15    14     67.5
+    ## 16    15     72.5
+    ## 17    16     77.5
+    ## 18    17     82.5
+    ## 19    18     85
+
+``` r
+f_cb1990_1999 %>%
+  left_join(f_fips, by = c("state-county_FIPS" = "FIPS")) %>%
+  select(-`state-county_FIPS`, -Name) %>%
+  relocate(State, .after = year) %>%
+  rename(state = State,
+         race_sex = `race-sex`) %>%
+  mutate(year = as.character(year)) %>%
+  group_by(year, state, age_group, race_sex, origin) %>%
+  mutate(pop = sum(pop)) %>%
+  ungroup(year, state, age_group, race_sex, origin) %>%
+  mutate(identity = paste(year, state, age_group, race_sex, origin, sep = "-")) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-identity) %>%
+  pivot_wider(names_from = race_sex,
+              values_from = pop) %>%
+  rename(white_male = "1",
+         white_female = "2",
+         black_male = "3",
+         black_female = "4",
+         nat_amer_male = "5",
+         nat_amer_female = "6",
+         aapi_male = "7",
+         aapi_female = "8") %>%
+  mutate(male = white_male + black_male + nat_amer_male + aapi_male,
+         female = white_female + black_female + nat_amer_female + aapi_female,
+         white = white_male + white_female,
+         black = black_male + black_female,
+         nat_amer = nat_amer_male + nat_amer_female,
+         aapi = aapi_male + aapi_female) %>%
+  select(-white_male, -black_male, -nat_amer_male, -aapi_male, 
+         -white_female, -black_female, -nat_amer_female, -aapi_female) %>%
+  group_by(year, state) %>%
+  mutate(pct_male = sum(male)/(sum(male) + sum(female))) %>%
+  ungroup(year, state) %>%
+  select(-male, -female) %>%
+  pivot_longer(cols = c("white", "black", "nat_amer", "aapi"),
+               names_to = "race",
+               values_to = "pop") %>%
+  mutate(race = if_else(origin == 2, "hispanic", race)) %>%
+  select(-origin) %>%
+  group_by(year, state, age_group, race) %>%
+  mutate(tot_pop = sum(pop),
+         identity = paste(year, state, age_group, race, sep = "-")) %>%
+  ungroup(year, state, age_group, race) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-identity, -pop) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_pop) %>%
+  drop_na() %>%
+  mutate(tot_row = white + black + nat_amer + aapi + hispanic) %>%
+  group_by(year, state) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_amer) + sum(aapi))/sum(tot_row)) %>%
+  ungroup(year, state) %>%
+  select(-white, -black, -nat_amer, -aapi, -hispanic) %>%
+  left_join(f_agegroups, by = c("age_group" = "group")) %>%
+  relocate(mean_age, .after = age_group) %>%
+  mutate(age_score = mean_age * tot_row,
+         age_score_adult = if_else(age_group < 4,
+                                   0,
+                                   if_else(age_group == 4, 
+                                           0.4 * 19 * tot_row,
+                                           mean_age * tot_row)),
+         tot_adult = if_else(age_group < 4, 
+                             0,
+                             if_else(age_group == 4,
+                                     0.4 * tot_row,
+                                     tot_row))) %>%
+  group_by(year, state) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row),
+         avg_age_adult = sum(age_score_adult)/sum(tot_adult)) %>%
+  ungroup(year, state) %>%
+  select(-age_score, -age_score_adult, -tot_adult) %>%
+  mutate(age_00_17 = if_else(age_group < 4,
+                             tot_row,
+                             if_else(age_group == 4,
+                                     tot_row * 0.6,
+                                     0)),
+         age_18_34 = if_else(age_group < 4, 
+                             0,
+                             if_else(age_group == 4,
+                                     tot_row * 0.4,
+                                     if_else(age_group <= 7,
+                                             tot_row,
+                                             0))),
+         age_35_64 = if_else(age_group < 8,
+                             0,
+                             if_else(age_group > 13,
+                                     0,
+                                     tot_row)),
+         age_65_00 = if_else(age_group < 14,
+                             0,
+                             tot_row)) %>%
+  group_by(year, state) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(year, state) %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age_group, -mean_age, -tot_row) %>%
+  mutate(identity = paste(state, year, sep = "-")) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  mutate(year = paste("19", year, sep = "")) %>%
+  left_join(f_states, by = c("state" = "abbreviation")) %>%
+  mutate(state = us_state) %>%
+  select(-us_state, -identity) %>%
+  relocate(state) %>%
+  relocate(pop, .after = year)
+```
+
+    ## # A tibble: 510 x 14
+    ##    state        year     pop pct_male pct_white pct_black pct_hispanic pct_other
+    ##    <chr>        <chr>  <dbl>    <dbl>     <dbl>     <dbl>        <dbl>     <dbl>
+    ##  1 Alabama      1990  3.72e6    0.484     0.722    0.261       0.00648    0.0100
+    ##  2 Alaska       1990  5.33e5    0.509     0.730    0.0407      0.0323     0.197 
+    ##  3 Arizona      1990  1.81e6    0.502     0.511    0.0585      0.296      0.135 
+    ##  4 Arkansas     1990  2.29e6    0.484     0.818    0.164       0.00840    0.0105
+    ##  5 California   1990  1.28e7    0.495     0.476    0.102       0.268      0.154 
+    ##  6 Colorado     1990  2.58e6    0.492     0.752    0.0501      0.167      0.0309
+    ##  7 Connecticut  1990  1.92e6    0.481     0.722    0.137       0.112      0.0291
+    ##  8 Delaware     1990  5.00e5    0.470     0.722    0.224       0.0321     0.0220
+    ##  9 District of~ 1990  3.45e5    0.527     0.396    0.473       0.0952     0.0352
+    ## 10 Florida      1990  8.10e6    0.496     0.681    0.188       0.108      0.0225
+    ## # ... with 500 more rows, and 6 more variables: avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+Coolio, moving on to the 80s. Same thing as the 90s - just need to merge
+in some of the races.
+
+``` r
+f_agegroups2 <- tibble(age_group = c("age_00_04", "age_05_09", "age_10_14",
+                                     "age_15_19", "age_20_24", "age_25_29",
+                                     "age_30_34", "age_35_39", "age_40_44",
+                                     "age_45_49", "age_50_54", "age_55_59",
+                                     "age_60_64", "age_65_69", "age_70_74",
+                                     "age_75_79", "age_80_84", "age_85_00"),
+                       mean_age = c(seq(2.5, 82.5, 5), 85))
+
+f_agegroups
+```
+
+    ## # A tibble: 19 x 2
+    ##    group mean_age
+    ##    <dbl>    <dbl>
+    ##  1     0      0  
+    ##  2     1      2.5
+    ##  3     2      7.5
+    ##  4     3     12.5
+    ##  5     4     17.5
+    ##  6     5     22.5
+    ##  7     6     27.5
+    ##  8     7     32.5
+    ##  9     8     37.5
+    ## 10     9     42.5
+    ## 11    10     47.5
+    ## 12    11     52.5
+    ## 13    12     57.5
+    ## 14    13     62.5
+    ## 15    14     67.5
+    ## 16    15     72.5
+    ## 17    16     77.5
+    ## 18    17     82.5
+    ## 19    18     85
+
+``` r
+f_cb1980_1989 %>%
+  mutate(state_FIPS = str_sub(state_year_race_sex, 1, 2),
+         year = str_sub(state_year_race_sex, 3, 3),
+         race = str_sub(state_year_race_sex, 4, 4),
+         sex = str_sub(state_year_race_sex, 5, 5),
+         age_45_49 = as.numeric(age_45_49),
+         age_50_54 = as.numeric(age_50_54),
+         age_55_59 = as.numeric(age_55_59),
+         age_60_64 = as.numeric(age_60_64),
+         age_65_69 = as.numeric(age_65_69),
+         age_80_84 = as.numeric(age_80_84),
+         year = paste("198", year, sep = "")) %>%
+  select(-state_year_race_sex) %>%
+  pivot_longer(cols = starts_with("age"),
+               names_to = "age_group",
+               values_to = "pop") %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  mutate(tot_row = male + female) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(pct_male = sum(male)/sum(tot_row)) %>%
+  ungroup(state_FIPS, year) %>%
+  select(-male, -female) %>%
+  mutate(race = as.numeric(race),
+         race = if_else(race > 4, "hispanic", as.character(race))) %>%
+  mutate(identity = paste(state_FIPS, year, race, age_group, sep = "-")) %>%
+  group_by(identity) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  ungroup() %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-identity) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         aapi = "4") %>%
+  mutate(tot_row = white + black + nat_american + aapi + hispanic) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_american) + sum(aapi))/sum(tot_row)) %>%
+  ungroup(state_FIPS, year) %>%
+  select(-white, -black, -nat_american, -aapi, -hispanic) %>%
+  left_join(f_agegroups2, by = "age_group") %>%
+  relocate(mean_age, .after = age_group) %>%
+  mutate(age_score = mean_age * tot_row,
+         age_score_adult = if_else(mean_age < 17.5,
+                                   0,
+                                   if_else(mean_age == 17.5,
+                                           0.4 * mean_age * tot_row,
+                                           mean_age * tot_row)),
+         tot_row_adult = if_else(mean_age < 17.5,
+                                 0,
+                                 if_else(mean_age == 17.5,
+                                         0.4 * tot_row,
+                                         tot_row))) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row),
+         avg_age_adult = sum(age_score_adult)/sum(tot_row_adult)) %>%
+  ungroup(state_FIPS, year) %>%
+  select(-age_score, -age_score_adult, -tot_row_adult) %>%
+  mutate(age_00_17 = if_else(mean_age < 17.5,
+                             tot_row,
+                             if_else(mean_age == 17.5,
+                                     0.6 * tot_row,
+                                     0)),
+         age_18_34 = if_else(mean_age < 17.5,
+                             0,
+                             if_else(mean_age == 17.5,
+                                     0.4 * tot_row,
+                                     if_else(mean_age < 35,
+                                             tot_row,
+                                             0))),
+         age_35_64 = if_else(mean_age < 35,
+                             0,
+                             if_else(mean_age < 65,
+                                     tot_row,
+                                     0)),
+         age_65_00 = if_else(mean_age < 65,
+                             0,
+                             tot_row)) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row),
+         identity = paste(state_FIPS, year, sep = "-")) %>%
+  ungroup(state_FIPS, year) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-age_group, -mean_age, -tot_row, -age_00_17, 
+         -age_18_34, -age_35_64, -age_65_00, -identity) %>%
+  left_join(f_states2, by = c("state_FIPS" = "FIPS")) %>%
+  select(-state_FIPS, -`Postal Code`) %>%
+  rename(state = Name) %>%
+  relocate(state) %>%
+  relocate(pop, .after = year)
+```
+
+    ## # A tibble: 459 x 14
+    ##    state   year      pop pct_male pct_white pct_black pct_hispanic pct_other
+    ##    <chr>   <chr>   <dbl>    <dbl>     <dbl>     <dbl>        <dbl>     <dbl>
+    ##  1 Alabama 1981  3918520    0.480     0.734    0.253       0.00798   0.00517
+    ##  2 Alabama 1982  3925218    0.480     0.734    0.253       0.00773   0.00562
+    ##  3 Alabama 1983  3934109    0.480     0.734    0.252       0.00750   0.00605
+    ##  4 Alabama 1984  3951834    0.480     0.734    0.252       0.00730   0.00647
+    ##  5 Alabama 1985  3972527    0.480     0.735    0.251       0.00708   0.00694
+    ##  6 Alabama 1986  3991569    0.480     0.735    0.251       0.00687   0.00741
+    ##  7 Alabama 1987  4015261    0.480     0.734    0.251       0.00666   0.00786
+    ##  8 Alabama 1988  4023858    0.480     0.734    0.251       0.00647   0.00837
+    ##  9 Alabama 1989  4030229    0.479     0.733    0.252       0.00625   0.00889
+    ## 10 Alaska  1981   418488    0.529     0.766    0.0348      0.0236    0.176  
+    ## # ... with 449 more rows, and 6 more variables: avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+Okay - I’m not sure if this is an error, but DC has a tiny white
+population in the 80s, which I need to double check… And wow - [this
+Wikepedia
+article](https://en.wikipedia.org/wiki/Demographics_of_Washington,_D.C.#Historic_racial_and_ethnic_makeup)
+checks out. Shouldn’t have doubted the data\!
+
+Now, to finish up with 1980.
+
+``` r
+f_cb1980 %>%
+  select(-GISJOIN, -STATEFP, -STATENH, -NAME) %>%
+  rename(year = YEAR,
+         state = STATE,
+         male = A08AA,
+         female = A08AB,
+         age_00_04 = B57AA,
+         age_05_09 = B57AB,
+         age_10_14 = B57AC,
+         age_15_17 = B57AD,
+         age_18_19 = B57AE,
+         age_20 = B57AF,
+         age_21 = B57AG,
+         age_22_24 = B57AH,
+         age_25_29 = B57AI,
+         age_30_34 = B57AJ,
+         age_35_44 = B57AK,
+         age_45_54 = B57AL,
+         age_55_59 = B57AM,
+         age_60_61 = B57AN,
+         age_62_64 = B57AO,
+         age_65_74 = B57AP,
+         age_75_84 = B57AQ,
+         age_85_00 = B57AR,
+         white = AE7AA,
+         black = AE7AB,
+         nat_american = AE7AC,
+         aapi = AE7AD,
+         other = AE7AE,
+         mixed = AE7AF,
+         white_hispanic = AE7AG,
+         black_hispanic = AE7AH,
+         nat_american_hispanic = AE7AI,
+         aapi_hispanic = AE7AJ,
+         other_hispanic = AE7AK,
+         mixed_hispanic = AE7AL) %>%
+  mutate(year = as.character(year)) %>%
+  filter(year == "1980") %>%
+  mutate(pop = male + female,
+         pct_male = male/pop) %>%
+  select(-male, -female, -mixed, -mixed_hispanic) %>%
+  mutate(pct_white = white/pop,
+         pct_black = black/pop,
+         pct_hispanic = (white_hispanic + black_hispanic + nat_american_hispanic +
+                         aapi_hispanic + other_hispanic)/pop,
+         pct_other = (nat_american + aapi + other)/pop) %>%
+  select(-white, -black, -nat_american, -aapi, -other, -white_hispanic, 
+         -black_hispanic, -nat_american_hispanic, -aapi_hispanic, -other_hispanic) %>%
+  mutate(age_score = 2.5 * age_00_04 + 7.5 * age_05_09 + 12.5 * age_10_14 +
+           16.5 * age_15_17 + 19 * age_18_19 + 20 * age_20 + 21 * age_21 + 
+           23.5 * age_22_24 + 27.5 * age_25_29 + 32.5 * age_30_34 + 40 * age_35_44 +
+           50 * age_45_54 + 57.5 * age_55_59 + 61 * age_60_61 + 63.5 * age_62_64 + 
+           70 * age_65_74 + 80 * age_75_84 + 85 * age_85_00,
+         avg_age = age_score/pop,
+         age_score_adult = 19 * age_18_19 + 20 * age_20 + 21 * age_21 + 
+           23.5 * age_22_24 + 27.5 * age_25_29 + 32.5 * age_30_34 + 40 * age_35_44 +
+           50 * age_45_54 + 57.5 * age_55_59 + 61 * age_60_61 + 63.5 * age_62_64 + 
+           70 * age_65_74 + 80 * age_75_84 + 85 * age_85_00,
+         tot_pop_adult = age_18_19 + age_20 + age_21 + age_22_24 + age_25_29 + 
+           age_30_34 + age_35_44 + age_45_54 + age_55_59 + age_60_61 + age_62_64 +
+           age_65_74 + age_75_84 + age_85_00,
+         avg_age_adult = age_score_adult/tot_pop_adult,
+         age_00_17 = age_00_04 + age_05_09 + age_10_14 + age_15_17,
+         age_18_34 = age_18_19 + age_20 + age_21 + age_22_24 + age_25_29 + age_30_34,
+         age_35_64 = age_35_44 + age_45_54 + age_55_59 + age_60_61 + age_62_64,
+         age_65_00 = age_65_74 + age_75_84 + age_85_00,
+         pct_00_17 = age_00_17/pop,
+         pct_18_34 = age_18_34/pop,
+         pct_35_64 = age_35_64/pop,
+         pct_65_00 = age_65_00/pop) %>%
+  relocate(state) %>%
+  relocate(pop, .after = year) %>%
+  select(state, year, pop, pct_male, pct_white, pct_black,
+         pct_hispanic, pct_other, avg_age, avg_age_adult,
+         pct_00_17, pct_18_34, pct_35_64, pct_65_00)
+```
+
+    ## # A tibble: 51 x 14
+    ##    state        year     pop pct_male pct_white pct_black pct_hispanic pct_other
+    ##    <chr>        <chr>  <dbl>    <dbl>     <dbl>     <dbl>        <dbl>     <dbl>
+    ##  1 Alabama      1980  3.89e6    0.481     0.733    0.253       0.00871   0.00539
+    ##  2 Alaska       1980  4.02e5    0.530     0.764    0.0337      0.0225    0.180  
+    ##  3 Arizona      1980  2.72e6    0.492     0.746    0.0266      0.163     0.0636 
+    ##  4 Arkansas     1980  2.29e6    0.483     0.822    0.162       0.00742   0.00879
+    ##  5 California   1980  2.37e7    0.493     0.670    0.0754      0.192     0.0630 
+    ##  6 Colorado     1980  2.89e6    0.496     0.829    0.0345      0.118     0.0188 
+    ##  7 Connecticut  1980  3.11e6    0.482     0.882    0.0682      0.0403    0.00905
+    ##  8 Delaware     1980  5.94e5    0.482     0.813    0.160       0.0161    0.0110 
+    ##  9 District Of~ 1980  6.38e5    0.463     0.261    0.697       0.0278    0.0140 
+    ## 10 Florida      1980  9.75e6    0.480     0.767    0.135       0.0880    0.00954
+    ## # ... with 41 more rows, and 6 more variables: avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+Sweet - now to merge all these things together (potentially go back
+further with demographic data, but for now will stop at 1980).
+
+Aaaand I’m realizing now that I didn’t overwrite any of the previous
+frames, so I’ll have to do that now.
+
+``` r
+# 2010s
+f_cb2010_2019 <- f_cb2010_2019 %>% 
+  select(-SUMLEV, -REGION, -DIVISION, -STATE, -CENSUS2010POP, -ESTIMATESBASE2010) %>% 
+  pivot_longer(cols = starts_with("POPESTIMATE"),
+               names_to = "year",
+               names_prefix = "POPESTIMATE",
+               values_to = "pop") %>%
+  rename(state = NAME,
+         sex = SEX,
+         origin = ORIGIN,
+         race = RACE,
+         age = AGE) %>%
+  filter(sex != 0,
+         origin != 0) %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  group_by(state, year) %>%
+  mutate(tot_male = sum(male),
+         tot_female = sum(female)) %>%
+  ungroup(state, year) %>%
+  mutate(tot_pop = tot_male + tot_female,
+         pct_male = tot_male/tot_pop) %>%
+  select(-tot_male, -tot_female, -tot_pop) %>%
+  mutate(tot_row = male + female) %>%
+  select(-male, -female) %>%
+  relocate(tot_row, .after = year) %>%
+  arrange(year) %>%
+  mutate(race = if_else(origin == 1, race, 7)) %>%
+  select(-origin) %>%
+  group_by(state, race, age, year) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  distinct(tot_row, .keep_all = TRUE) %>%
+  ungroup(state, race, age, year) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         asian = "4",
+         pac_island = "5",
+         other = "6",
+         hispanic = "7") %>%
+  mutate(tot_row = white + black + nat_american + asian + pac_island + other + hispanic) %>%
+  group_by(state, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_american) + sum(asian) + sum(pac_island) + sum(other))/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  select(-white, -black, -nat_american, -asian, -pac_island, -hispanic, -other) %>%
+  mutate(age_score = age * tot_row) %>%
+  group_by(state, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  mutate(age_score = if_else(age < 18, 0, age * tot_row),
+         age_total = if_else(age < 18, 0, tot_row)) %>%
+  group_by(state, year) %>%
+  mutate(avg_age_adult = sum(age_score)/sum(age_total)) %>%
+  ungroup(state, year) %>%
+  select(-age_score, -age_total) %>%
+  mutate(age_00_17 = if_else(age < 18, tot_row, 0),
+         age_18_34 = if_else(age >= 18 & age < 35, tot_row, 0),
+         age_35_64 = if_else(age >= 35 & age < 65, tot_row, 0),
+         age_65_00 = if_else(age >= 65, tot_row, 0)) %>%
+  group_by(state, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  group_by(state) %>%
+  distinct(year, .keep_all = TRUE) %>%
+  ungroup() %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age, -tot_row) %>%
+  relocate(pop, .after = year)
+
+# 2000s
+f_cb2000_2009 <- f_cb2000_2009 %>%
+  select(-SUMLEV, -REGION, -DIVISION, -CENSUS2000POP, -ESTIMATESBASE2000)  %>%
+  left_join(f_states2, by = c("STATE" = "FIPS")) %>%
+  select(-STATE, -`Postal Code`) %>%
+  relocate(Name) %>%
+  pivot_longer(cols = starts_with("POPESTIMATE"),
+               names_to = "year",
+               names_prefix = "POPESTIMATE",
+               values_to = "pop") %>%
+  rename(state = Name,
+         sex = SEX,
+         origin = ORIGIN,
+         race = RACE,
+         age = AGE) %>%
+  filter(sex != 0,
+         origin != 0,
+         state != "United States") %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  group_by(state, year) %>%
+  mutate(tot_male = sum(male),
+         tot_female = sum(female)) %>%
+  ungroup(state, year) %>%
+  mutate(tot_pop = tot_male + tot_female,
+         pct_male = tot_male/tot_pop) %>%
+  select(-tot_male, -tot_female, -tot_pop) %>%
+  mutate(tot_row = male + female) %>%
+  select(-male, -female) %>%
+  relocate(tot_row, .after = year) %>%
+  arrange(year) %>%
+  mutate(race = if_else(origin == 1, race, 7)) %>%
+  select(-origin) %>%
+  group_by(state, race, age, year) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  distinct(tot_row, .keep_all = TRUE) %>%
+  ungroup(state, race, age, year) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         asian = "4",
+         pac_island = "5",
+         other = "6",
+         hispanic = "7") %>%
+  mutate(tot_row = white + black + nat_american + asian + pac_island + hispanic + other) %>%
+  group_by(state, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row), 
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_american) + sum(asian) + sum(pac_island) + sum(other))/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  select(-white, -black, -nat_american, -asian, -pac_island, -hispanic, -other) %>%
+  mutate(age_score = age * tot_row) %>%
+  group_by(state, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  mutate(age_score = if_else(age < 18, 0, age * tot_row),
+         age_total = if_else(age < 18, 0, tot_row)) %>%
+  group_by(state, year) %>%
+  mutate(avg_age_adult = sum(age_score)/sum(age_total)) %>%
+  ungroup(state, year) %>%
+  select(-age_score, -age_total) %>%
+  mutate(age_00_17 = if_else(age < 18, tot_row, 0),
+         age_18_34 = if_else(age >= 18 & age < 35, tot_row, 0),
+         age_35_64 = if_else(age >= 35 & age < 65, tot_row, 0),
+         age_65_00 = if_else(age >= 65, tot_row, 0)) %>%
+  group_by(state, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(state, year) %>%
+  group_by(state) %>%
+  distinct(year, .keep_all = TRUE) %>%
+  ungroup() %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age, -tot_row) %>%
+  relocate(pop, .after = year)
+
+# 1990s
+f_cb1990_1999 <- f_cb1990_1999 %>%
+  left_join(f_fips, by = c("state-county_FIPS" = "FIPS")) %>%
+  select(-`state-county_FIPS`, -Name) %>%
+  relocate(State, .after = year) %>%
+  rename(state = State,
+         race_sex = `race-sex`) %>%
+  mutate(year = as.character(year)) %>%
+  group_by(year, state, age_group, race_sex, origin) %>%
+  mutate(pop = sum(pop)) %>%
+  ungroup(year, state, age_group, race_sex, origin) %>%
+  mutate(identity = paste(year, state, age_group, race_sex, origin, sep = "-")) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-identity) %>%
+  pivot_wider(names_from = race_sex,
+              values_from = pop) %>%
+  rename(white_male = "1",
+         white_female = "2",
+         black_male = "3",
+         black_female = "4",
+         nat_amer_male = "5",
+         nat_amer_female = "6",
+         aapi_male = "7",
+         aapi_female = "8") %>%
+  mutate(male = white_male + black_male + nat_amer_male + aapi_male,
+         female = white_female + black_female + nat_amer_female + aapi_female,
+         white = white_male + white_female,
+         black = black_male + black_female,
+         nat_amer = nat_amer_male + nat_amer_female,
+         aapi = aapi_male + aapi_female) %>%
+  select(-white_male, -black_male, -nat_amer_male, -aapi_male, 
+         -white_female, -black_female, -nat_amer_female, -aapi_female) %>%
+  group_by(year, state) %>%
+  mutate(pct_male = sum(male)/(sum(male) + sum(female))) %>%
+  ungroup(year, state) %>%
+  select(-male, -female) %>%
+  pivot_longer(cols = c("white", "black", "nat_amer", "aapi"),
+               names_to = "race",
+               values_to = "pop") %>%
+  mutate(race = if_else(origin == 2, "hispanic", race)) %>%
+  select(-origin) %>%
+  group_by(year, state, age_group, race) %>%
+  mutate(tot_pop = sum(pop),
+         identity = paste(year, state, age_group, race, sep = "-")) %>%
+  ungroup(year, state, age_group, race) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-identity, -pop) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_pop) %>%
+  drop_na() %>%
+  mutate(tot_row = white + black + nat_amer + aapi + hispanic) %>%
+  group_by(year, state) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_amer) + sum(aapi))/sum(tot_row)) %>%
+  ungroup(year, state) %>%
+  select(-white, -black, -nat_amer, -aapi, -hispanic) %>%
+  left_join(f_agegroups, by = c("age_group" = "group")) %>%
+  relocate(mean_age, .after = age_group) %>%
+  mutate(age_score = mean_age * tot_row,
+         age_score_adult = if_else(age_group < 4,
+                                   0,
+                                   if_else(age_group == 4, 
+                                           0.4 * 19 * tot_row,
+                                           mean_age * tot_row)),
+         tot_adult = if_else(age_group < 4, 
+                             0,
+                             if_else(age_group == 4,
+                                     0.4 * tot_row,
+                                     tot_row))) %>%
+  group_by(year, state) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row),
+         avg_age_adult = sum(age_score_adult)/sum(tot_adult)) %>%
+  ungroup(year, state) %>%
+  select(-age_score, -age_score_adult, -tot_adult) %>%
+  mutate(age_00_17 = if_else(age_group < 4,
+                             tot_row,
+                             if_else(age_group == 4,
+                                     tot_row * 0.6,
+                                     0)),
+         age_18_34 = if_else(age_group < 4, 
+                             0,
+                             if_else(age_group == 4,
+                                     tot_row * 0.4,
+                                     if_else(age_group <= 7,
+                                             tot_row,
+                                             0))),
+         age_35_64 = if_else(age_group < 8,
+                             0,
+                             if_else(age_group > 13,
+                                     0,
+                                     tot_row)),
+         age_65_00 = if_else(age_group < 14,
+                             0,
+                             tot_row)) %>%
+  group_by(year, state) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row)) %>%
+  ungroup(year, state) %>%
+  select(-age_00_17, -age_18_34, -age_35_64, -age_65_00, -age_group, -mean_age, -tot_row) %>%
+  mutate(identity = paste(state, year, sep = "-")) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  mutate(year = paste("19", year, sep = "")) %>%
+  left_join(f_states, by = c("state" = "abbreviation")) %>%
+  mutate(state = us_state) %>%
+  select(-us_state, -identity) %>%
+  relocate(state) %>%
+  relocate(pop, .after = year)
+
+# 1980s
+f_cb1981_1989 <- f_cb1980_1989 %>%
+  mutate(state_FIPS = str_sub(state_year_race_sex, 1, 2),
+         year = str_sub(state_year_race_sex, 3, 3),
+         race = str_sub(state_year_race_sex, 4, 4),
+         sex = str_sub(state_year_race_sex, 5, 5),
+         age_45_49 = as.numeric(age_45_49),
+         age_50_54 = as.numeric(age_50_54),
+         age_55_59 = as.numeric(age_55_59),
+         age_60_64 = as.numeric(age_60_64),
+         age_65_69 = as.numeric(age_65_69),
+         age_80_84 = as.numeric(age_80_84),
+         year = paste("198", year, sep = "")) %>%
+  select(-state_year_race_sex) %>%
+  pivot_longer(cols = starts_with("age"),
+               names_to = "age_group",
+               values_to = "pop") %>%
+  pivot_wider(names_from = sex,
+              values_from = pop) %>%
+  rename(male = "1",
+         female = "2") %>%
+  mutate(tot_row = male + female) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(pct_male = sum(male)/sum(tot_row)) %>%
+  ungroup(state_FIPS, year) %>%
+  select(-male, -female) %>%
+  mutate(race = as.numeric(race),
+         race = if_else(race > 4, "hispanic", as.character(race))) %>%
+  mutate(identity = paste(state_FIPS, year, race, age_group, sep = "-")) %>%
+  group_by(identity) %>%
+  mutate(tot_row = sum(tot_row)) %>%
+  ungroup() %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-identity) %>%
+  pivot_wider(names_from = race,
+              values_from = tot_row) %>%
+  rename(white = "1",
+         black = "2",
+         nat_american = "3",
+         aapi = "4") %>%
+  mutate(tot_row = white + black + nat_american + aapi + hispanic) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(pct_white = sum(white)/sum(tot_row),
+         pct_black = sum(black)/sum(tot_row),
+         pct_hispanic = sum(hispanic)/sum(tot_row),
+         pct_other = (sum(nat_american) + sum(aapi))/sum(tot_row)) %>%
+  ungroup(state_FIPS, year) %>%
+  select(-white, -black, -nat_american, -aapi, -hispanic) %>%
+  left_join(f_agegroups2, by = "age_group") %>%
+  relocate(mean_age, .after = age_group) %>%
+  mutate(age_score = mean_age * tot_row,
+         age_score_adult = if_else(mean_age < 17.5,
+                                   0,
+                                   if_else(mean_age == 17.5,
+                                           0.4 * mean_age * tot_row,
+                                           mean_age * tot_row)),
+         tot_row_adult = if_else(mean_age < 17.5,
+                                 0,
+                                 if_else(mean_age == 17.5,
+                                         0.4 * tot_row,
+                                         tot_row))) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(avg_age = sum(age_score)/sum(tot_row),
+         avg_age_adult = sum(age_score_adult)/sum(tot_row_adult)) %>%
+  ungroup(state_FIPS, year) %>%
+  select(-age_score, -age_score_adult, -tot_row_adult) %>%
+  mutate(age_00_17 = if_else(mean_age < 17.5,
+                             tot_row,
+                             if_else(mean_age == 17.5,
+                                     0.6 * tot_row,
+                                     0)),
+         age_18_34 = if_else(mean_age < 17.5,
+                             0,
+                             if_else(mean_age == 17.5,
+                                     0.4 * tot_row,
+                                     if_else(mean_age < 35,
+                                             tot_row,
+                                             0))),
+         age_35_64 = if_else(mean_age < 35,
+                             0,
+                             if_else(mean_age < 65,
+                                     tot_row,
+                                     0)),
+         age_65_00 = if_else(mean_age < 65,
+                             0,
+                             tot_row)) %>%
+  group_by(state_FIPS, year) %>%
+  mutate(pct_00_17 = sum(age_00_17)/sum(tot_row),
+         pct_18_34 = sum(age_18_34)/sum(tot_row),
+         pct_35_64 = sum(age_35_64)/sum(tot_row),
+         pct_65_00 = sum(age_65_00)/sum(tot_row),
+         pop = sum(tot_row),
+         identity = paste(state_FIPS, year, sep = "-")) %>%
+  ungroup(state_FIPS, year) %>%
+  distinct(identity, .keep_all = TRUE) %>%
+  select(-age_group, -mean_age, -tot_row, -age_00_17, 
+         -age_18_34, -age_35_64, -age_65_00, -identity) %>%
+  left_join(f_states2, by = c("state_FIPS" = "FIPS")) %>%
+  select(-state_FIPS, -`Postal Code`) %>%
+  rename(state = Name) %>%
+  relocate(state) %>%
+  relocate(pop, .after = year)
+
+f_cb1980 <- f_cb1980 %>%
+  select(-GISJOIN, -STATEFP, -STATENH, -NAME) %>%
+  rename(year = YEAR,
+         state = STATE,
+         male = A08AA,
+         female = A08AB,
+         age_00_04 = B57AA,
+         age_05_09 = B57AB,
+         age_10_14 = B57AC,
+         age_15_17 = B57AD,
+         age_18_19 = B57AE,
+         age_20 = B57AF,
+         age_21 = B57AG,
+         age_22_24 = B57AH,
+         age_25_29 = B57AI,
+         age_30_34 = B57AJ,
+         age_35_44 = B57AK,
+         age_45_54 = B57AL,
+         age_55_59 = B57AM,
+         age_60_61 = B57AN,
+         age_62_64 = B57AO,
+         age_65_74 = B57AP,
+         age_75_84 = B57AQ,
+         age_85_00 = B57AR,
+         white = AE7AA,
+         black = AE7AB,
+         nat_american = AE7AC,
+         aapi = AE7AD,
+         other = AE7AE,
+         mixed = AE7AF,
+         white_hispanic = AE7AG,
+         black_hispanic = AE7AH,
+         nat_american_hispanic = AE7AI,
+         aapi_hispanic = AE7AJ,
+         other_hispanic = AE7AK,
+         mixed_hispanic = AE7AL) %>%
+  mutate(year = as.character(year)) %>%
+  filter(year == "1980") %>%
+  mutate(pop = male + female,
+         pct_male = male/pop) %>%
+  select(-male, -female, -mixed, -mixed_hispanic) %>%
+  mutate(pct_white = white/pop,
+         pct_black = black/pop,
+         pct_hispanic = (white_hispanic + black_hispanic + nat_american_hispanic +
+                         aapi_hispanic + other_hispanic)/pop,
+         pct_other = (nat_american + aapi + other)/pop) %>%
+  select(-white, -black, -nat_american, -aapi, -other, -white_hispanic, 
+         -black_hispanic, -nat_american_hispanic, -aapi_hispanic, -other_hispanic) %>%
+  mutate(age_score = 2.5 * age_00_04 + 7.5 * age_05_09 + 12.5 * age_10_14 +
+           16.5 * age_15_17 + 19 * age_18_19 + 20 * age_20 + 21 * age_21 + 
+           23.5 * age_22_24 + 27.5 * age_25_29 + 32.5 * age_30_34 + 40 * age_35_44 +
+           50 * age_45_54 + 57.5 * age_55_59 + 61 * age_60_61 + 63.5 * age_62_64 + 
+           70 * age_65_74 + 80 * age_75_84 + 85 * age_85_00,
+         avg_age = age_score/pop,
+         age_score_adult = 19 * age_18_19 + 20 * age_20 + 21 * age_21 + 
+           23.5 * age_22_24 + 27.5 * age_25_29 + 32.5 * age_30_34 + 40 * age_35_44 +
+           50 * age_45_54 + 57.5 * age_55_59 + 61 * age_60_61 + 63.5 * age_62_64 + 
+           70 * age_65_74 + 80 * age_75_84 + 85 * age_85_00,
+         tot_pop_adult = age_18_19 + age_20 + age_21 + age_22_24 + age_25_29 + 
+           age_30_34 + age_35_44 + age_45_54 + age_55_59 + age_60_61 + age_62_64 +
+           age_65_74 + age_75_84 + age_85_00,
+         avg_age_adult = age_score_adult/tot_pop_adult,
+         age_00_17 = age_00_04 + age_05_09 + age_10_14 + age_15_17,
+         age_18_34 = age_18_19 + age_20 + age_21 + age_22_24 + age_25_29 + age_30_34,
+         age_35_64 = age_35_44 + age_45_54 + age_55_59 + age_60_61 + age_62_64,
+         age_65_00 = age_65_74 + age_75_84 + age_85_00,
+         pct_00_17 = age_00_17/pop,
+         pct_18_34 = age_18_34/pop,
+         pct_35_64 = age_35_64/pop,
+         pct_65_00 = age_65_00/pop) %>%
+  relocate(state) %>%
+  relocate(pop, .after = year) %>%
+  select(state, year, pop, pct_male, pct_white, pct_black,
+         pct_hispanic, pct_other, avg_age, avg_age_adult,
+         pct_00_17, pct_18_34, pct_35_64, pct_65_00)
+```
+
+``` r
+f_cb1980_2019 <- 
+  bind_rows(f_cb1980,
+            f_cb1981_1989,
+            f_cb1990_1999,
+            f_cb2000_2009,
+            f_cb2010_2019)
+
+f_cb1980_2019
+```
+
+    ## # A tibble: 2,040 x 14
+    ##    state        year     pop pct_male pct_white pct_black pct_hispanic pct_other
+    ##    <chr>        <chr>  <dbl>    <dbl>     <dbl>     <dbl>        <dbl>     <dbl>
+    ##  1 Alabama      1980  3.89e6    0.481     0.733    0.253       0.00871   0.00539
+    ##  2 Alaska       1980  4.02e5    0.530     0.764    0.0337      0.0225    0.180  
+    ##  3 Arizona      1980  2.72e6    0.492     0.746    0.0266      0.163     0.0636 
+    ##  4 Arkansas     1980  2.29e6    0.483     0.822    0.162       0.00742   0.00879
+    ##  5 California   1980  2.37e7    0.493     0.670    0.0754      0.192     0.0630 
+    ##  6 Colorado     1980  2.89e6    0.496     0.829    0.0345      0.118     0.0188 
+    ##  7 Connecticut  1980  3.11e6    0.482     0.882    0.0682      0.0403    0.00905
+    ##  8 Delaware     1980  5.94e5    0.482     0.813    0.160       0.0161    0.0110 
+    ##  9 District Of~ 1980  6.38e5    0.463     0.261    0.697       0.0278    0.0140 
+    ## 10 Florida      1980  9.75e6    0.480     0.767    0.135       0.0880    0.00954
+    ## # ... with 2,030 more rows, and 6 more variables: avg_age <dbl>,
+    ## #   avg_age_adult <dbl>, pct_00_17 <dbl>, pct_18_34 <dbl>, pct_35_64 <dbl>,
+    ## #   pct_65_00 <dbl>
+
+Sicko mode. Just to peek through, I’ll look at how Texas’ population has
+changed throughout the years.
+
+``` r
+f_cb1980_2019 %>%
+  filter(state == "Texas") %>%
+  ggplot(aes(x = as.numeric(year),
+             y = pop)) +
+  geom_line()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-74-1.png)<!-- -->
+
+``` r
+f_cb1980_2019 %>%
+  filter(state == "Texas") %>%
+  ggplot(aes(x = as.numeric(year),
+             y = pct_male)) +
+  geom_line() 
+```
+
+![](README_files/figure-gfm/unnamed-chunk-74-2.png)<!-- -->
+
+``` r
+f_cb1980_2019 %>%
+  filter(state == "Texas") %>%
+  pivot_longer(cols = c("pct_white", "pct_black", "pct_hispanic", "pct_other"),
+               names_to = "race_cat",
+               values_to = "race_val") %>%
+  ggplot(aes(x = as.numeric(year),
+             y = race_val,
+             fill = race_cat)) +
+  geom_area()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-74-3.png)<!-- -->
+
+``` r
+f_cb1980_2019 %>%
+  filter(state == "Texas") %>%
+  pivot_longer(cols = c("avg_age", "avg_age_adult"),
+               names_to = "age_cat",
+               values_to = "age_val") %>%
+  ggplot(aes(x = as.numeric(year),
+             y = age_val,
+             color = age_cat)) +
+  geom_line()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-74-4.png)<!-- -->
+
+``` r
+f_cb1980_2019 %>%
+  filter(state == "Texas") %>%
+  pivot_longer(cols = c("pct_00_17", "pct_18_34", "pct_35_64", "pct_65_00"),
+               names_to = "age_cat",
+               values_to = "age_val") %>%
+  ggplot(aes(x = as.numeric(year),
+             y = age_val,
+             fill = age_cat)) +
+  geom_area()
+```
+
+![](README_files/figure-gfm/unnamed-chunk-74-5.png)<!-- -->
+
+With that done, I need to write a concise script to write this to a new
+dataset.
