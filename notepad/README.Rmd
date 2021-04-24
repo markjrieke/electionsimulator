@@ -3753,6 +3753,53 @@ f_cb1980_2019 %>%
 
 With that done, I need to write a concise script to write this to a new dataset. 
 
+## Economics
+
+### State GDP Per Capita
+
+Okay, I started working on another script to get the state GDP per capita. It's a little more straightforward than the demographic data (since [FRED](https://fred.stlouisfed.org/) has way more consistent data formats than the census bureau), so I'll just drop the final script into a code chunk when I'm done. 
+
+One thing that's causing me to scratch my head a bit is that the data on FRED for total state GDP (at least that I have now) only goes back to 1997. I'm not sure what to do about that... I need to read up on whether or not I can impute the previous data (probably not), only utilize this predictor for years when it's available (maybe? though I think that would also throw off the regression for any pre-1997 elections), merge pretty much every race together (maybe can do this, though I'm not sure the literature supports this - would mean treating Texas exactly the same as California, for example.), or dig thru & find more data (pre 1997) (ideal...).
+
+Anyway, I'll deal with that later, for now here's a quick chart showing the real gdp per capita of each state. There's a quick drop at 2000 becasue projected population growth was updated to actuals with the 2000 census. The big outlier is D.C. 
+
+```{r}
+read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/tidy/state_gdp_per_cap_1997_2019.csv") %>%
+  ggplot(aes(x = date,
+             y = gdp_act_per_capita,
+             group = state)) +
+  geom_line(alpha = 0.25)
+```
+
+Here it is on a log scale:
+
+```{r}
+read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/tidy/state_gdp_per_cap_1997_2019.csv") %>%
+  ggplot(aes(x = date,
+             y = gdp_act_per_capita,
+             group = state)) +
+  geom_line(alpha = 0.25) +
+  scale_y_log10()
+```
+
+Hmmmm this also makes me think - maybe I ought to scale the predictor on a log10 scale as well... Something to think about once I get to ghat point. 
+
+### State Unemployment
+
+Similar to GDP per capita, the unemployment rate is pretty simple (see wrangle_unemployment.R). Here's how it looks historically:
+
+```{r}
+read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/tidy/unemployment_1976_2021.csv") %>%
+  ggplot(aes(x = date,
+             y = unemployment,
+             group = state)) + 
+  geom_line(alpha = 0.25)
+```
+
+### Educational Attainment 
+
+Okay so this definitely isn't an economic indicator, but I figure it's good to add in. [This dataset](https://www.ers.usda.gov/webdocs/DataFiles/48747/Education.xls) gives the educational attainment by state from census bureau surveys since 1970. I'll probably have to interpolate between years, but that should be okay.
+
 
 
 

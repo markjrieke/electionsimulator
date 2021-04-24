@@ -179,6 +179,5 @@ f_unemployment <-
   select(-Name, -FIPS)
 
 # write ----
-
 write_csv(f_unemployment,
           file = "data/tidy/unemployment_1976_2021.csv")
