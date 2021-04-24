@@ -650,7 +650,7 @@ f_cb1980_2019 <-
 
 # write to file
 f_cb1980_2019 %>%
-  write_csv("data/tidy/deomographics_1980_2019.csv")
+  write_csv("data/tidy/demographics_1980_2019.csv")
 
 # clean
 rm(list = ls())
