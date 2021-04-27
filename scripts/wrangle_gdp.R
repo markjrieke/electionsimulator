@@ -2,6 +2,11 @@
 library(tidyverse)
 
 # import ----
+
+# pre 1997 data (BEA)
+f_gdp <- read_csv("https://apps.bea.gov/regional/histdata/releases/1204gsp/gsp1204-SIC.csv")
+
+# 1997 data (FRED)
 f_alaska <- read_csv("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23e1e9f0&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1168&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=AKNGSP&scale=left&cosd=1997-01-01&coed=2020-01-01&line_color=%234572a7&link_values=false&line_style=solid&mark_type=none&mw=3&lw=2&ost=-99999&oet=99999&mma=0&fml=a&fq=Annual&fam=avg&fgst=lin&fgsnd=2020-01-01&line_index=1&transformation=lin&vintage_date=2021-04-24&revision_date=2021-04-24&nd=1997-01-01")
 f_alabama <- read_csv("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23e1e9f0&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1168&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=ALNGSP&scale=left&cosd=1997-01-01&coed=2020-01-01&line_color=%234572a7&link_values=false&line_style=solid&mark_type=none&mw=3&lw=2&ost=-99999&oet=99999&mma=0&fml=a&fq=Annual&fam=avg&fgst=lin&fgsnd=2020-01-01&line_index=1&transformation=lin&vintage_date=2021-04-24&revision_date=2021-04-24&nd=1997-01-01")
 f_arkansas <- read_csv("https://fred.stlouisfed.org/graph/fredgraph.csv?bgcolor=%23e1e9f0&chart_type=line&drp=0&fo=open%20sans&graph_bgcolor=%23ffffff&height=450&mode=fred&recession_bars=on&txtcolor=%23444444&ts=12&tts=12&width=1168&nt=0&thu=0&trc=0&show_legend=yes&show_axis_titles=yes&show_tooltip=yes&id=ARNGSP&scale=left&cosd=1997-01-01&coed=2020-01-01&line_color=%234572a7&link_values=false&line_style=solid&mark_type=none&mw=3&lw=2&ost=-99999&oet=99999&mma=0&fml=a&fq=Annual&fam=avg&fgst=lin&fgsnd=2020-01-01&line_index=1&transformation=lin&vintage_date=2021-04-24&revision_date=2021-04-24&nd=1997-01-01")
@@ -188,6 +193,35 @@ f_cpi <-
   mutate(adj = cpi_bench/cpi)
 
 # wrangle ----
+
+# pre 1997 data
+f_gdp <- 
+  f_gdp %>%
+  select(-ID, -COMPONENT, -FIPS, -CODE) %>%
+  filter(INDUSTRY == "Total Gross State Product",
+         !REGION %in% c("UNITED STATES",
+                        "NEW ENGLAND",
+                        "MIDEAST",
+                        "GREAT LAKES",
+                        "PLAINS",
+                        "SOUTHEAST",
+                        "SOUTHWEST",
+                        "ROCKY MTN",
+                        "FAR WEST")) %>%
+  select(-INDUSTRY) %>%
+  pivot_longer(cols = starts_with("19"),
+               names_to = "year",
+               values_to = "gdp_nom") %>%
+  rename(state = REGION) %>%
+  filter(year != "1997") %>%
+  mutate(date = as.Date(paste(year, "01-01", sep = "-")),
+         gdp_nom = as.numeric(gdp_nom),
+         state = str_replace(state, "Dist. of Col.", "District of Columbia"),
+         index = paste(state, year, sep = "-")) %>%
+  relocate(date) %>%
+  relocate(year, .after = gdp_nom)
+
+# 1997 + data
 f_state_gdp <-
   f_state_gdp %>%
   pivot_longer(cols = ends_with("NGSP"),
@@ -199,12 +233,18 @@ f_state_gdp <-
   mutate(state = Name,
          year = str_sub(as.character(date), 1, 4),
          index = paste(state, year, sep = "-")) %>%
-  select(-Name, -FIPS) %>%
+  select(-Name, -FIPS)
+
+# merge & final wrangle
+f_gdp <- 
+  f_gdp %>%
+  bind_rows(f_state_gdp) %>%
   left_join(f_state_pops, by = "index") %>%
   left_join(f_cpi, by = "date") %>%
   mutate(gdp_act_per_capita = gdp_nom * adj * 1000000 / pop) %>%
-  select(date, state, gdp_nom, gdp_act_per_capita)
+  select(date, state, gdp_nom, gdp_act_per_capita) %>%
+  drop_na()
 
 # write ----
-write_csv(f_state_gdp,
-          file = "data/tidy/state_gdp_per_cap_1997_2019.csv")
+write_csv(f_gdp,
+          file = "data/tidy/state_gdp_per_cap_1980_2019.csv")

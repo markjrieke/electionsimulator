@@ -3800,6 +3800,10 @@ read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/ele
 
 Okay so this definitely isn't an economic indicator, but I figure it's good to add in. [This dataset](https://www.ers.usda.gov/webdocs/DataFiles/48747/Education.xls) gives the educational attainment by state from census bureau surveys since 1970. I'll probably have to interpolate between years, but that should be okay.
 
+Bro bro bro - pivoting because I found a better dataset. BEA has tracked [GDP by State since 1977.](https://apps.bea.gov/regional/histdata/releases/1204gsp/index.cfm) I've redone this in the wrangle file. 
+
+
+
 
 
 
