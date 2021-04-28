@@ -3802,8 +3802,31 @@ Okay so this definitely isn't an economic indicator, but I figure it's good to a
 
 Bro bro bro - pivoting because I found a better dataset. BEA has tracked [GDP by State since 1977.](https://apps.bea.gov/regional/histdata/releases/1204gsp/index.cfm) I've redone this in the wrangle file. 
 
+Here's the state gdp plot:
 
+```{r}
+read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/tidy/state_gdp_per_cap_1980_2019.csv") %>%
+  ggplot(aes(x = date,
+             y = gdp_act_per_capita,
+             group = state)) +
+  geom_line(alpha = 0.25) + 
+  scale_y_log10()
+```
 
+Aaaand here's personal income per capita [(also from BEA)](https://apps.bea.gov/regional/downloadzip.cfm):
+
+```{r}
+read_csv("C:/Users/z003ynch/Desktop/Personal/site_projects/thedatadiary_repo/electionsimulator/data/tidy/personal_income_per_cap_act_1980_2019.csv") %>%
+  ggplot(aes(x = as.numeric(year),
+             y = inc_per_cap_act,
+             group = state)) +
+  geom_line(alpha = 0.25)
+
+```
+
+On a totally separate note, I really need to get a handle on what's going on in the 90s. I think there's something going on where the state population in the 90s is being undercounted, and I'm not quite sure why...
+
+On another, separate note, I need to standardize around a specific date for CPI info. I may need to go back into the wrangle files and select a specific benchmark (maybe November 2020?). It doesn't really mater what the specific date is, but the way that the scripts run now, the most recent CPI date is selected as the benchmark, which could be an issue if the wrangle scripts are run on different days. 
 
 
 
